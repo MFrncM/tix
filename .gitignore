@@ -1,0 +1,6 @@
+# Vendor / dependencies (if added later)
+vendor/autoload.php
+
+# OS files
+.DS_Store
+Thumbs.db

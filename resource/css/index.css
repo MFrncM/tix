@@ -1,0 +1,71 @@
+body {
+    background-color: #f4f6f9;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+.navbar {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Stat cards */
+.stat-card {
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1) !important;
+}
+.stat-icon {
+    width: 52px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+/* Cards */
+.card {
+    border-radius: 12px;
+}
+.btn {
+    border-radius: 8px;
+}
+
+/* Table headers */
+.table thead th {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #6c757d;
+    font-weight: 600;
+    border-bottom-width: 1px;
+}
+
+/* Ticket description */
+.ticket-description {
+    line-height: 1.75;
+    color: #333;
+    white-space: pre-wrap;
+}
+
+/* Comment thread */
+.comment-block .comment-body {
+    border-left: 3px solid #dee2e6;
+    border-radius: 0 8px 8px 0;
+    background: #f8f9fa;
+    padding: 0.75rem 1rem;
+}
+.comment-block.dev-comment .comment-body {
+    border-left-color: #ffc107;
+    background: #fffdf0;
+}
+
+/* Login page */
+.login-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #0d6efd11 0%, #f4f6f9 60%);
+}
