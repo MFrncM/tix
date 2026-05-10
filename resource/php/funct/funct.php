@@ -18,22 +18,22 @@ function redirect(string $url): void {
 
 function priorityBadge(string $priority): string {
     $map = [
-        'Low'      => 'bg-success',
-        'Medium'   => 'bg-primary',
-        'High'     => 'bg-warning text-dark',
-        'Critical' => 'bg-danger',
+        'Low'      => 'badge-low',
+        'Medium'   => 'badge-medium',
+        'High'     => 'badge-high',
+        'Critical' => 'badge-critical',
     ];
-    $class = $map[$priority] ?? 'bg-secondary';
+    $class = $map[$priority] ?? 'badge-closed';
     return "<span class=\"badge {$class}\">" . e($priority) . "</span>";
 }
 
 function statusBadge(string $status): string {
     $map = [
-        'Open'        => 'bg-primary',
-        'In Progress' => 'bg-warning text-dark',
-        'Resolved'    => 'bg-success',
-        'Closed'      => 'bg-secondary',
+        'Open'        => 'badge-open',
+        'In Progress' => 'badge-progress',
+        'Resolved'    => 'badge-resolved',
+        'Closed'      => 'badge-closed',
     ];
-    $class = $map[$status] ?? 'bg-secondary';
+    $class = $map[$status] ?? 'badge-closed';
     return "<span class=\"badge {$class}\">" . e($status) . "</span>";
 }
