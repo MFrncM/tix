@@ -23,7 +23,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container-fluid px-4">
-        <a class="navbar-brand fw-bold" href="<?= BASE_URL ?>/<?= isDeveloper() ? 'dashboard.php' : 'my_tickets.php' ?>">
+        <a class="navbar-brand fw-bold" href="<?= homeUrl() ?>">
             <i class="bi bi-ticket-perforated-fill me-1"></i><?= APP_NAME ?>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -32,7 +32,13 @@ $currentPage = basename($_SERVER['PHP_SELF']);
         <?php if (isLoggedIn()): ?>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
-                <?php if (isDeveloper()): ?>
+
+                <?php if (isAdmin()): ?>
+                <li class="nav-item">
+                    <a class="nav-link <?= $currentPage === 'admin_dashboard.php' ? 'active' : '' ?>" href="<?= BASE_URL ?>/admin_dashboard.php">
+                        <i class="bi bi-shield-lock me-1"></i>Admin
+                    </a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link <?= $currentPage === 'dashboard.php' ? 'active' : '' ?>" href="<?= BASE_URL ?>/dashboard.php">
                         <i class="bi bi-speedometer2 me-1"></i>Dashboard
@@ -43,6 +49,24 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                         <i class="bi bi-grid me-1"></i>Systems
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link <?= $currentPage === 'manage_users.php' ? 'active' : '' ?>" href="<?= BASE_URL ?>/manage_users.php">
+                        <i class="bi bi-people me-1"></i>Users
+                    </a>
+                </li>
+
+                <?php elseif (isDeveloper()): ?>
+                <li class="nav-item">
+                    <a class="nav-link <?= $currentPage === 'dashboard.php' ? 'active' : '' ?>" href="<?= BASE_URL ?>/dashboard.php">
+                        <i class="bi bi-speedometer2 me-1"></i>Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link <?= $currentPage === 'manage_systems.php' ? 'active' : '' ?>" href="<?= BASE_URL ?>/manage_systems.php">
+                        <i class="bi bi-grid me-1"></i>Systems
+                    </a>
+                </li>
+
                 <?php else: ?>
                 <li class="nav-item">
                     <a class="nav-link <?= $currentPage === 'my_tickets.php' ? 'active' : '' ?>" href="<?= BASE_URL ?>/my_tickets.php">
@@ -50,18 +74,26 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                     </a>
                 </li>
                 <?php endif; ?>
+
+                <?php if (!isAdmin()): ?>
                 <li class="nav-item">
                     <a class="nav-link <?= $currentPage === 'submit_ticket.php' ? 'active' : '' ?>" href="<?= BASE_URL ?>/submit_ticket.php">
                         <i class="bi bi-plus-circle me-1"></i>Submit Ticket
                     </a>
                 </li>
+                <?php endif; ?>
+
             </ul>
             <ul class="navbar-nav">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
                         <i class="bi bi-person-circle me-1"></i><?= e($_SESSION['name']) ?>
-                        <?php if (isDeveloper()): ?>
+                        <?php if (isAdmin()): ?>
+                        <span class="badge bg-danger ms-1" style="font-size:0.65rem;">Admin</span>
+                        <?php elseif (isDeveloper()): ?>
                         <span class="badge bg-warning text-dark ms-1" style="font-size:0.65rem;">Dev</span>
+                        <?php else: ?>
+                        <span class="badge bg-info text-dark ms-1" style="font-size:0.65rem;">User</span>
                         <?php endif; ?>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end">

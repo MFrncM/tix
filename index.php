@@ -6,7 +6,7 @@ require_once 'resource/php/class/User.php';
 require_once 'includes/auth.php';
 
 if (isLoggedIn()) {
-    redirect(BASE_URL . '/' . (isDeveloper() ? 'dashboard.php' : 'my_tickets.php'));
+    redirect(homeUrl());
 }
 
 $error     = '';
@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['name']    = $user['name'];
                 $_SESSION['email']   = $user['email'];
                 $_SESSION['role']    = $user['role'];
-                redirect(BASE_URL . '/' . ($user['role'] === 'developer' ? 'dashboard.php' : 'my_tickets.php'));
+                redirect(homeUrl());
             } else {
                 $error = 'Invalid email or password.';
             }
@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $error = 'Email is already registered.';
         } else {
             $role      = User::register($pdo, $name, $email, $password);
-            $note      = $role === 'developer' ? ' You have been assigned the Developer role as the first user.' : '';
+            $note      = $role === 'admin' ? ' You have been assigned the Admin role as the first user.' : '';
             $success   = 'Account created!' . $note . ' You can now log in.';
             $activeTab = 'login';
         }

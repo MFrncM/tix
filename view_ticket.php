@@ -3,7 +3,7 @@ require_once 'includes/header.php';
 requireLogin();
 
 $id      = (int)($_GET['id'] ?? 0);
-$backUrl = BASE_URL . '/' . (isDeveloper() ? 'dashboard.php' : 'my_tickets.php');
+$backUrl = isAdmin() ? BASE_URL . '/admin_dashboard.php' : (isDeveloper() ? BASE_URL . '/dashboard.php' : BASE_URL . '/my_tickets.php');
 
 if (!$id) {
     redirect($backUrl);
@@ -99,12 +99,16 @@ $comments = TicketComment::getByTicket($pdo, $id);
             <p class="text-muted small">No comments yet.</p>
             <?php else: ?>
             <?php foreach ($comments as $comment):
-                $isDev = $comment['author_role'] === 'developer';
+                $authorRole     = $comment['author_role'];
+                $isDevComment   = $authorRole === 'developer';
+                $isAdminComment = $authorRole === 'admin';
             ?>
-            <div class="comment-block <?= $isDev ? 'dev-comment' : '' ?> mb-3">
+            <div class="comment-block <?= ($isDevComment || $isAdminComment) ? 'dev-comment' : '' ?> mb-3">
                 <div class="d-flex align-items-center mb-1 gap-2">
                     <span class="fw-medium"><?= e($comment['author_name']) ?></span>
-                    <?php if ($isDev): ?>
+                    <?php if ($isAdminComment): ?>
+                    <span class="badge bg-danger" style="font-size:0.65rem;">Admin</span>
+                    <?php elseif ($isDevComment): ?>
                     <span class="badge bg-warning text-dark" style="font-size:0.65rem;">Developer</span>
                     <?php endif; ?>
                     <span class="text-muted small"><?= date('M d, Y g:i A', strtotime($comment['created_at'])) ?></span>
